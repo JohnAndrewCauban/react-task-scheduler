@@ -1,0 +1,4 @@
+export const HIGH_PRIORITY_THRESHOLD = 50; 
+export const MAX_BAR_DISPLAY_VALUE = 500; 
+export const SCHEDULER_TICK_INTERVAL_MS = 1000; 
+export const UNITS_PER_SECOND = 10; 
