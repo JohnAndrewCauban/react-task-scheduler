@@ -26,10 +26,10 @@ const TaskQueuePanel = ({ tasks, addTask, admitTask, highPriorityThreshold }) =>
         {tasks.map((task) => (
           <TaskItem
             key={task.id}
-            duration={task.duration} // Still pass actual duration for priority coloring
+            duration={task.duration}
             isHighPriority={task.duration <= highPriorityThreshold}
-            displayValue={task.queueNumber} // New prop for queue number display
-            isQueueNumberDisplay={true} // Indicate it's a queue number
+            displayValue={task.queueNumber} 
+            isQueueNumberDisplay={true}
           />
         ))}
       </div>

@@ -4,9 +4,9 @@ import React from 'react';
 const ThemeToggleButton = ({ darkMode, toggleDarkMode }) => {
   return (
     <button
-      className="theme-toggle-btn" // New CSS class for styling
+      className="theme-toggle-btn" 
       onClick={toggleDarkMode}
-      aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} // Accessibility
+      aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {/* Icon or text indicating current mode */}
       {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}

@@ -19,4 +19,4 @@ const TaskItem = ({ duration, isHighPriority, isProcessing, displayValue, isQueu
   );
 };
 
-export default TaskItem;
+export default TaskItem;  
