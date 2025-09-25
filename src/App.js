@@ -17,13 +17,15 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   // processing queues
-  const [highPriorityQueue, setHighPriorityQueue] = useState([]);
+  const [highPriorityQueue1, setHighPriorityQueue1] = useState([]); // Renamed for clarity
+  const [highPriorityQueue2, setHighPriorityQueue2] = useState([]); // NEW STATE
   const [regularQueue2, setRegularQueue2] = useState([]);
   const [regularQueue3, setRegularQueue3] = useState([]);
   const [regularQueue4, setRegularQueue4] = useState([]);
 
   // durations
-  const [highPriorityDuration, setHighPriorityDuration] = useState(0);
+  const [highPriorityDuration1, setHighPriorityDuration1] = useState(0); // Renamed for clarity
+  const [highPriorityDuration2, setHighPriorityDuration2] = useState(0); // NEW STATE
   const [regularDuration2, setRegularDuration2] = useState(0);
   const [regularDuration3, setRegularDuration3] = useState(0);
   const [regularDuration4, setRegularDuration4] = useState(0);
@@ -65,8 +67,22 @@ function App() {
     setTasks(prevTasks => prevTasks.slice(1));
 
     if (nextTask.duration <= HIGH_PRIORITY_THRESHOLD) {
-      setHighPriorityQueue(prevQueue => [...prevQueue, nextTask]);
-      setHighPriorityDuration(prevDuration => prevDuration + nextTask.duration);
+      // Logic for TWO high-priority queues: find the shortest one
+      const hpQueues = [
+        { id: 1, queue: highPriorityQueue1, setQueue: setHighPriorityQueue1, duration: highPriorityDuration1, setDuration: setHighPriorityDuration1 },
+        { id: 2, queue: highPriorityQueue2, setQueue: setHighPriorityQueue2, duration: highPriorityDuration2, setDuration: setHighPriorityDuration2 },
+      ];
+
+      let shortestHpQueue = hpQueues[0];
+      for (let i = 1; i < hpQueues.length; i++) {
+        if (hpQueues[i].duration < shortestHpQueue.duration) {
+          shortestHpQueue = hpQueues[i];
+        }
+      }
+      
+      shortestHpQueue.setQueue(prevQueue => [...prevQueue, nextTask]);
+      shortestHpQueue.setDuration(prevDuration => prevDuration + nextTask.duration);
+
     } else {
       const regularQueues = [
         { id: 2, queue: regularQueue2, setQueue: setRegularQueue2, duration: regularDuration2, setDuration: setRegularDuration2 },
@@ -94,11 +110,13 @@ function App() {
   // reset
   const resetAllQueues = () => {
     setTasks([]);
-    setHighPriorityQueue([]);
+    setHighPriorityQueue1([]); // Reset HP Queue 1
+    setHighPriorityQueue2([]); // Reset NEW HP Queue 2
     setRegularQueue2([]);
     setRegularQueue3([]);
     setRegularQueue4([]);
-    setHighPriorityDuration(0);
+    setHighPriorityDuration1(0); // Reset HP Duration 1
+    setHighPriorityDuration2(0); // Reset NEW HP Duration 2
     setRegularDuration2(0);
     setRegularDuration3(0);
     setRegularDuration4(0);
@@ -126,8 +144,10 @@ function App() {
 
         {/* right */}
         <ProcessingQueuesPanel
-          highPriorityQueue={highPriorityQueue}
-          highPriorityDuration={highPriorityDuration}
+          highPriorityQueue1={highPriorityQueue1} // Pass HP Queue 1
+          highPriorityDuration1={highPriorityDuration1} // Pass HP Duration 1
+          highPriorityQueue2={highPriorityQueue2} // Pass NEW HP Queue 2
+          highPriorityDuration2={highPriorityDuration2} // Pass NEW HP Duration 2
           regularQueue2={regularQueue2}
           regularDuration2={regularDuration2}
           regularQueue3={regularQueue3}
@@ -152,7 +172,8 @@ function App() {
 
       {/* scheduler component */}
       <Scheduler
-        highPriorityQueue={highPriorityQueue} setHighPriorityQueue={setHighPriorityQueue} setHighPriorityDuration={setHighPriorityDuration}
+        highPriorityQueue1={highPriorityQueue1} setHighPriorityQueue1={setHighPriorityQueue1} setHighPriorityDuration1={setHighPriorityDuration1} // Pass HP 1
+        highPriorityQueue2={highPriorityQueue2} setHighPriorityQueue2={setHighPriorityQueue2} setHighPriorityDuration2={setHighPriorityDuration2} // Pass NEW HP 2
         regularQueue2={regularQueue2} setRegularQueue2={setRegularQueue2} setRegularDuration2={setRegularDuration2}
         regularQueue3={regularQueue3} setRegularQueue3={setRegularQueue3} setRegularDuration3={setRegularDuration3}
         regularQueue4={regularQueue4} setRegularQueue4={setRegularQueue4} setRegularDuration4={setRegularDuration4}

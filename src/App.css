@@ -206,11 +206,11 @@ body.dark-mode {
 .processing-queues-panel {
   flex: 2;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 15px;
-  min-width: 650px;
-  max-width: 800px;
+  min-width: 900px;
+  max-width: 1200px;
 }
 
 .queue-box {
