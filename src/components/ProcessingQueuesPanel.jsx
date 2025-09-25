@@ -1,11 +1,11 @@
 // src/components/ProcessingQueuesPanel.jsx
 
-import React from 'react'; // React
-import QueueBox from './QueueBox'; // import QueueBox
+import React from 'react';
+import QueueBox from './QueueBox';
 
-// component: displays all processing queues
 const ProcessingQueuesPanel = ({
-  highPriorityQueue, highPriorityDuration,
+  highPriorityQueue1, highPriorityDuration1, // HP Queue 1 props
+  highPriorityQueue2, highPriorityDuration2, // NEW HP Queue 2 props
   regularQueue2, regularDuration2,
   regularQueue3, regularDuration3,
   regularQueue4, regularDuration4,
@@ -13,12 +13,21 @@ const ProcessingQueuesPanel = ({
 }) => {
   return (
     <div className="processing-queues-panel">
-      {/* high priority */}
+      {/* high priority 1 */}
       <QueueBox
         title="High Priority Queue 1"
-        queue={highPriorityQueue}
-        duration={highPriorityDuration}
+        queue={highPriorityQueue1}
+        duration={highPriorityDuration1}
         isHighPriority={true}
+        maxBarValue={maxBarValue}
+      />
+
+      {/* high priority 2 - NEW QUEUE */}
+      <QueueBox
+        title="High Priority Queue 2"
+        queue={highPriorityQueue2}
+        duration={highPriorityDuration2}
+        isHighPriority={true} // Still high priority
         maxBarValue={maxBarValue}
       />
 

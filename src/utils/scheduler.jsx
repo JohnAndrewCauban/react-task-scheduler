@@ -1,10 +1,11 @@
 // src/utils/scheduler.jsx
 
 import React, { useEffect, useRef } from 'react';
-import { UNITS_PER_SECOND, SCHEDULER_TICK_INTERVAL_MS } from './constants'; // Import constants
+import { UNITS_PER_SECOND, SCHEDULER_TICK_INTERVAL_MS } from './constants';
 
 const Scheduler = ({
-  highPriorityQueue, setHighPriorityQueue, setHighPriorityDuration,
+  highPriorityQueue1, setHighPriorityQueue1, setHighPriorityDuration1, // HP Queue 1 props
+  highPriorityQueue2, setHighPriorityQueue2, setHighPriorityDuration2, // NEW HP Queue 2 props
   regularQueue2, setRegularQueue2, setRegularDuration2,
   regularQueue3, setRegularQueue3, setRegularDuration3,
   regularQueue4, setRegularQueue4, setRegularDuration4,
@@ -16,7 +17,7 @@ const Scheduler = ({
     if (currentQueue.length > 0) {
       const updatedQueue = [...currentQueue];
       const firstTask = { ...updatedQueue[0] };
-      firstTask.duration -= UNITS_PER_SECOND; // Use constant here
+      firstTask.duration -= UNITS_PER_SECOND;
 
       if (firstTask.duration <= 0) {
         updatedQueue.shift();
@@ -32,17 +33,19 @@ const Scheduler = ({
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
-        processQueue(highPriorityQueue, setHighPriorityQueue, setHighPriorityDuration);
+        processQueue(highPriorityQueue1, setHighPriorityQueue1, setHighPriorityDuration1); // Process HP Queue 1
+        processQueue(highPriorityQueue2, setHighPriorityQueue2, setHighPriorityDuration2); // Process NEW HP Queue 2
         processQueue(regularQueue2, setRegularQueue2, setRegularDuration2);
         processQueue(regularQueue3, setRegularQueue3, setRegularDuration3);
         processQueue(regularQueue4, setRegularQueue4, setRegularDuration4);
-      }, SCHEDULER_TICK_INTERVAL_MS); // Use constant here
+      }, SCHEDULER_TICK_INTERVAL_MS);
     }
 
     return () => clearInterval(intervalRef.current);
   }, [
     isRunning,
-    highPriorityQueue, setHighPriorityQueue, setHighPriorityDuration,
+    highPriorityQueue1, setHighPriorityQueue1, setHighPriorityDuration1, // HP Queue 1 deps
+    highPriorityQueue2, setHighPriorityQueue2, setHighPriorityDuration2, // NEW HP Queue 2 deps
     regularQueue2, setRegularQueue2, setRegularDuration2,
     regularQueue3, setRegularQueue3, setRegularDuration3,
     regularQueue4, setRegularQueue4, setRegularDuration4
