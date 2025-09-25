@@ -16,16 +16,16 @@ function App() {
   // main queue
   const [tasks, setTasks] = useState([]);
 
-  // processing queues
+  // processing queues (each is an array of task objects: { id, duration, queueNumber })
   const [highPriorityQueue1, setHighPriorityQueue1] = useState([]); // Renamed for clarity
-  const [highPriorityQueue2, setHighPriorityQueue2] = useState([]); // NEW STATE
+  const [highPriorityQueue2, setHighPriorityQueue2] = useState([]); // NEW STATE for HP Queue 2
   const [regularQueue2, setRegularQueue2] = useState([]);
   const [regularQueue3, setRegularQueue3] = useState([]);
   const [regularQueue4, setRegularQueue4] = useState([]);
 
-  // durations
+  // durations (sum of tasks in each queue)
   const [highPriorityDuration1, setHighPriorityDuration1] = useState(0); // Renamed for clarity
-  const [highPriorityDuration2, setHighPriorityDuration2] = useState(0); // NEW STATE
+  const [highPriorityDuration2, setHighPriorityDuration2] = useState(0); // NEW STATE for HP Duration 2
   const [regularDuration2, setRegularDuration2] = useState(0);
   const [regularDuration3, setRegularDuration3] = useState(0);
   const [regularDuration4, setRegularDuration4] = useState(0);
@@ -34,7 +34,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
 
   // theme control
-  const [darkMode, setDarkMode] = useState(true); // Start with dark mode
+  const [darkMode, setDarkMode] = useState(true);
 
   // effect
   useEffect(() => {
@@ -70,7 +70,7 @@ function App() {
       // Logic for TWO high-priority queues: find the shortest one
       const hpQueues = [
         { id: 1, queue: highPriorityQueue1, setQueue: setHighPriorityQueue1, duration: highPriorityDuration1, setDuration: setHighPriorityDuration1 },
-        { id: 2, queue: highPriorityQueue2, setQueue: setHighPriorityQueue2, duration: highPriorityDuration2, setDuration: setHighPriorityDuration2 },
+        { id: 2, queue: highPriorityQueue2, setQueue: setHighPriorityQueue2, duration: highPriorityDuration2, setDuration: setHighPriorityDuration2 }, // New HP Queue
       ];
 
       let shortestHpQueue = hpQueues[0];
@@ -80,10 +80,12 @@ function App() {
         }
       }
       
+      // add: to shortest high-priority queue
       shortestHpQueue.setQueue(prevQueue => [...prevQueue, nextTask]);
       shortestHpQueue.setDuration(prevDuration => prevDuration + nextTask.duration);
 
     } else {
+      // regular: queues data
       const regularQueues = [
         { id: 2, queue: regularQueue2, setQueue: setRegularQueue2, duration: regularDuration2, setDuration: setRegularDuration2 },
         { id: 3, queue: regularQueue3, setQueue: setRegularQueue3, duration: regularDuration3, setDuration: setRegularDuration3 },
